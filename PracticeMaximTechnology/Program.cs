@@ -1,12 +1,18 @@
-﻿using System;
+﻿using PracticeMaximTechnology.Task1;
 
-namespace PracticeMaximTechnology // Note: actual namespace depends on the project name.
+namespace PracticeMaximTechnology
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Введите строку:");
+            string input = Console.ReadLine();
+
+            string result = Solution.ProcessString(input);
+
+            Console.WriteLine("Обработанная строка:");
+            Console.WriteLine(result);
         }
     }
 }
