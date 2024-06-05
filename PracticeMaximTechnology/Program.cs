@@ -9,10 +9,16 @@ namespace PracticeMaximTechnology
             Console.WriteLine("Введите строку:");
             string input = Console.ReadLine();
 
-            string result = Solution.ProcessString(input);
-
-            Console.WriteLine("Обработанная строка:");
-            Console.WriteLine(result);
+            if (Solution.IsValidString(input, out string invalidChars))
+            {
+                string result = Solution.ProcessString(input);
+                Console.WriteLine("Обработанная строка:");
+                Console.WriteLine(result);
+            }
+            else
+            {
+                Console.WriteLine($"Ошибка: введены неподходящие символы: {invalidChars}");
+            }
         }
     }
 }

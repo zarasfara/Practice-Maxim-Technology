@@ -1,6 +1,8 @@
-﻿namespace PracticeMaximTechnology.Task1;
+﻿using System.Text.RegularExpressions;
 
-public class Solution
+namespace PracticeMaximTechnology.Task1;
+
+internal static class Solution
 {
     public static string ProcessString(string input)
     {
@@ -23,7 +25,16 @@ public class Solution
         }
     }
 
-    static string ReverseString(string s)
+    public static bool IsValidString(string input, out string invalidChars)
+    {
+        Regex regex = new Regex("[^a-z]");
+        MatchCollection matches = regex.Matches(input);
+
+        invalidChars = new string(matches.Select(m => m.Value[0]).Distinct().ToArray());
+        return matches.Count == 0;
+    }
+
+    private static string ReverseString(string s)
     {
         char[] charArray = s.ToCharArray();
         Array.Reverse(charArray);
