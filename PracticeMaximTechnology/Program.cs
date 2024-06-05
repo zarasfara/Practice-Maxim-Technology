@@ -7,13 +7,19 @@ namespace PracticeMaximTechnology
         static void Main(string[] args)
         {
             Console.WriteLine("Введите строку:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (Solution.IsValidString(input, out string invalidChars))
             {
-                string result = Solution.ProcessString(input);
-                Console.WriteLine("Обработанная строка:");
-                Console.WriteLine(result);
+                (string processedString, Dictionary<char, int> charOccurrences) = Solution.ProcessString(input);
+                Console.WriteLine($"Обработанная строка: {processedString}");
+
+                Console.WriteLine("Сколько раз повторяются символы:");
+
+                foreach (var pair in charOccurrences)
+                {
+                    Console.WriteLine($"Символ '{pair.Key}' встречается {pair.Value} раз(а)");
+                }
             }
             else
             {
