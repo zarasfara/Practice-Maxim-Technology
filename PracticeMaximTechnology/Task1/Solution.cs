@@ -4,10 +4,10 @@ namespace PracticeMaximTechnology.Task1
 {
     public static class Solution
     {
-        public static (string ProcessedString, Dictionary<char, int> CharOccurrences) ProcessString(string input)
+        private static string _vowels = "aeiouy";
+        public static (string ProcessedString, Dictionary<char, int> CharOccurrences, string LongestVowelSubstring) ProcessString(string input)
         {
             Dictionary<char, int> charOccurrences = new Dictionary<char, int>();
-
             string processedString;
 
             if (input.Length % 2 == 0)
@@ -35,9 +35,37 @@ namespace PracticeMaximTechnology.Task1
                 }
             }
 
-            return (processedString, charOccurrences);
-        }
+            string longestVowelSubstring = FindLongestVowelSubstring(processedString);
 
+            return (processedString, charOccurrences, longestVowelSubstring);
+        }
+        
+        private static string FindLongestVowelSubstring(string input)
+        {
+            int maxLength = 0;
+            string longestSubstring = "";
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (_vowels.Contains(input[i]))
+                {
+                    for (int j = i + 1; j < input.Length; j++)
+                    {
+                        if (_vowels.Contains(input[j]))
+                        {
+                            int length = j - i + 1;
+                            if (length > maxLength)
+                            {
+                                maxLength = length;
+                                longestSubstring = input.Substring(i, length);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return longestSubstring;
+        }
         
         public static bool IsValidString(string input, out string invalidChars)
         {

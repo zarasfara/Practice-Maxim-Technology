@@ -11,7 +11,7 @@ namespace PracticeMaximTechnology
 
             if (Solution.IsValidString(input, out string invalidChars))
             {
-                (string processedString, Dictionary<char, int> charOccurrences) = Solution.ProcessString(input);
+                (string processedString, Dictionary<char, int> charOccurrences, string longestVowelSubstring) = Solution.ProcessString(input);
                 Console.WriteLine($"Обработанная строка: {processedString}");
 
                 Console.WriteLine("Сколько раз повторяются символы:");
@@ -20,6 +20,8 @@ namespace PracticeMaximTechnology
                 {
                     Console.WriteLine($"Символ '{pair.Key}' встречается {pair.Value} раз(а)");
                 }
+
+                Console.WriteLine($"Самая длинная подстрока начинающаяся и заканчивающаяся на гласную: {longestVowelSubstring}");
             }
             else
             {
