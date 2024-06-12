@@ -1,11 +1,13 @@
 ﻿using PracticeMaximTechnology.Sort;
 using PracticeMaximTechnology.Task1;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace PracticeMaximTechnology;
 
 internal class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         Console.WriteLine("Введите строку:");
         string input = Console.ReadLine()!;
@@ -17,10 +19,36 @@ internal class Program
 
             string sortedString = ChooseAndSortString(input);
             Console.WriteLine(sortedString);
+            
+            int randomIndex = await GetRandomNumberAsync(processedString.Length - 1);
+            string stringWithRemovedChar = processedString.Remove(randomIndex, 1);
+            
+            Console.WriteLine($"Строка после удаления символа на позиции {randomIndex}: {stringWithRemovedChar}");
         }
         else
         {
             Console.WriteLine($"Ошибка: введены неподходящие символы: {invalidChars}");
+        }
+    }
+
+    private static async Task<int> GetRandomNumberAsync(int max)
+    {
+        HttpClient client = new();
+        try
+        {
+            string url = $"https://www.randomnumberapi.com/api/v1.0/random?min=0&max={max}&count=1";
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            int[] randomNumbers = JsonSerializer.Deserialize<int[]>(responseBody)!;
+
+            return randomNumbers[0];
+        }
+        catch
+        {
+            var rnd = new Random();
+            return rnd.Next(0, max);
         }
     }
 
